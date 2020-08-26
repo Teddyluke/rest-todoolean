@@ -29,7 +29,6 @@ function insertNewTask(newTaskValue) {
       text: newTaskValue
     },
     success: function (data) {
-      console.log(data);
       getTaskList();
     },
     error: function (err) {
@@ -67,15 +66,19 @@ function printTaskList(tasks) {
   }
 
 }
+
 // intercetta il click sul target da eliminare
 function deleteTaskListener() {
-  var target = $(".delete");
-  $(this).click(deleteTask)
+
+  $(document).on('click', '.delete', deleteTask);
 }
 
+// elimina il task cliccato
 function deleteTask() {
+  var deleteButton = $(this);
+  var id = deleteButton.data('id');
   $.ajax ({
-    url: `http://157.230.17.132:${myDoor}/todos/${$(".delete").attr("data-id")}`,
+    url: `http://157.230.17.132:${myDoor}/todos/${id}`,
     method: 'DELETE',
     success: function (data) {
       console.log(data);
